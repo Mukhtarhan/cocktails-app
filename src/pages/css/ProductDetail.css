@@ -1,0 +1,27 @@
+.flex-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.flex-container .cocktail-img {
+    height: 500px;
+    object-fit: cover;
+    object-position: center;
+    border: 20px solid #2c3e50;
+    border-radius: 5px;
+}
+
+.cocktail-infos .row {
+    margin: 10px 0;
+}
+
+.cocktail-infos .row .label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+}
+
+.drink {
+    margin-top: 20px;
+}
