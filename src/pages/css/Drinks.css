@@ -7,7 +7,7 @@
 .cocktails-container .cocktail-card {
     background: #e94b3cff;
     border-radius: 10px;
-    padding: 20px;
+    padding-bottom: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
 }
@@ -25,6 +25,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 10px;
 }
 
 .cocktail-info .cocktail-name {

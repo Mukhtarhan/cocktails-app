@@ -1,0 +1,38 @@
+.favourites-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.favourites-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.favourites-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.favourite-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 150px;
+  text-align: center;
+  background: #f9f9f9;
+}
+
+.favourite-image {
+  width: 100%;
+  height: auto;
+}
+
+.favourite-item p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
