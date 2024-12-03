@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './css/Drinks.css';
 
@@ -14,27 +14,28 @@ const Drinks = () => {
     const searchParams = new URLSearchParams(location.search);
     const searchTerm = searchParams.get('search') || 'm'; // Default to 'm'
 
-    // Fetch cocktails based on the search term
-    useEffect(() => {
-        const fetchCocktails = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch(`${baseUrl}${searchTerm}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const drinks = await response.json();
-                setCocktails(drinks.drinks || []); // Set empty array if no drinks are found
-            } catch (error) {
-                console.error('Error fetching drinks:', error);
-                setCocktails([]);
-            } finally {
-                setLoading(false);
+    // Memoize the fetchCocktails function
+    const fetchCocktails = useCallback(async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${baseUrl}${searchTerm}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        };
-
-        fetchCocktails();
+            const drinks = await response.json();
+            setCocktails(drinks.drinks || []); // Set empty array if no drinks are found
+        } catch (error) {
+            console.error('Error fetching drinks:', error);
+            setCocktails([]);
+        } finally {
+            setLoading(false);
+        }
     }, [searchTerm]);
+
+    // UseEffect to fetch cocktails whenever searchTerm changes
+    useEffect(() => {
+        fetchCocktails();
+    }, [fetchCocktails]);
 
     return (
         <div className="container">
