@@ -35,7 +35,7 @@ const LoginRegister = () => {
             }
         } else {
             login(username, password);
-            alert("You have successfully logged into your account")
+            
         }
     };
 

@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
             if (foundUser) {
                 setUser(foundUser);
                 setError(null);
+                alert("You have successfully logged into your account")
                 navigate('/');
             } else {
                 setError('Invalid username or password');

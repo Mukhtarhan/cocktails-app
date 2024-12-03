@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"; // Import AuthProvider context
 import './css/ProductDetail.css';
@@ -9,28 +9,27 @@ const ProductDetail = () => {
     const { idDrink } = useParams();
     const { user, setUser } = useAuth(); // Get user and setUser from AuthProvider
     const [product, setProduct] = useState(null);
-    const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
             const response = await fetch(url + idDrink);
             const { drinks } = await response.json();
             setProduct(drinks[0]);
-
-            // Check if this drink is already in user's favorites
-            if (user && user.cocktails.some((c) => c.idDrink === drinks[0].idDrink)) {
-                setIsFavorite(true);
-            }
         };
 
         fetchProduct();
-    }, [idDrink, user]);
+    }, [idDrink]);
+
+    // Memoize `isFavorite` calculation
+    const isFavorite = useMemo(() => {
+        return user && product && user.cocktails.some((c) => c.idDrink === product.idDrink);
+    }, [user, product]);
 
     const toggleFavorite = async () => {
         if (!user) {
-            alert('You need to log in to your account')
-            return
-        }; // Ensure user is logged in
+            alert('You need to log in to your account');
+            return;
+        } // Ensure user is logged in
 
         const updatedCocktails = isFavorite
             ? user.cocktails.filter((c) => c.idDrink !== product.idDrink) // Remove favorite
@@ -38,7 +37,6 @@ const ProductDetail = () => {
 
         const updatedUser = { ...user, cocktails: updatedCocktails };
         setUser(updatedUser);
-        setIsFavorite(!isFavorite);
 
         try {
             // Update user data on the server
